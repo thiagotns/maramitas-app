@@ -32,7 +32,9 @@ function Layout({ children }) {
                 </div>
             </div>
         </header>
-        {children}
+        <main className="container">
+            {children}
+        </main>
         </>
     );
 }
