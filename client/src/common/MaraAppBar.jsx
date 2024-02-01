@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import Link from '@mui/material/Link';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 const pages = ['Menu', 'Orders', 'Customers', 'Reports'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -20,10 +20,12 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function MaraAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [selected, setSelected] = React.useState(pages[0]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -34,6 +36,11 @@ function MaraAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const onClickMenuItem = (page) => {
+    setSelected(page);
+    handleCloseNavMenu();
   };
 
   return (
@@ -91,9 +98,9 @@ function MaraAppBar() {
               {pages.map((page) => (
                 <MenuItem 
                   key={page} 
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  href={`/${page.toLowerCase()}`}
+                  onClick={() => onClickMenuItem(page)}
+                  component={ReactRouterLink}
+                  to={`/${page.toLowerCase()}`}
                 >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -123,10 +130,17 @@ function MaraAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={Link}
-                href={`/${page.toLowerCase()}`}
+                onClick={() => onClickMenuItem(page)}
+                sx={{ 
+                  my: 2, 
+                  color: 'white', 
+                  display: 'block', 
+                  textDecoration: (selected === page ? 'underline' : 'none'), 
+                  textUnderlineOffset: 3,
+                  textDecorationThickness: 1.5,
+                }}
+                component={ReactRouterLink}
+                to={`/${page.toLowerCase()}`}
               >
                 {page}
               </Button>
