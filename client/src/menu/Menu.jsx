@@ -1,5 +1,7 @@
 import React from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import { Box, Button, Typography } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -36,6 +38,17 @@ const columns = [
 
 function Menu() {
     return (
+        <>
+        <Box sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingBottom: 1
+        }}>
+            <Typography variant="h6" component="h2" sx={{ flexGrow: 1, paddingLeft: 1 }}>
+                Menu
+            </Typography>
+            <Button  startIcon={<AddIcon />}>Create</Button>
+        </Box>
         <DataGrid
             rows={rows}
             columns={columns}
@@ -47,6 +60,7 @@ function Menu() {
             pageSizeOptions={[5, 10]}
             checkboxSelection
         />
+        </>
     );
 }
 
