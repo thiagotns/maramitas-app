@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Typography, Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
@@ -9,22 +9,22 @@ const columns = [
     { field: 'startDate', headerName: 'Star Date', width: 130 },
     { field: 'endDate', headerName: 'End name', width: 130 }
   ];
-  
-  const rows = [
-    { id: 1, startDate: 'Snow', endDate: 'Jon' },
-    { id: 2, startDate: 'Lannister', endDate: 'Cersei' },
-    { id: 3, startDate: 'Lannister', endDate: 'Jaime' },
-    { id: 4, startDate: 'Stark', endDate: 'Arya' },
-    { id: 5, startDate: 'Targaryen', endDate: 'Daenerys' },
-    { id: 6, startDate: 'Melisandre', endDate: null },
-    { id: 7, startDate: 'Clifford', endDate: 'Ferrara' },
-    { id: 8, startDate: 'Frances', endDate: 'Rossini' },
-    { id: 9, startDate: 'Roxie', endDate: 'Harvey' },
-  ];
 
 function Menu() {
 
     const navigate = useNavigate();
+    const [menuList, setMenuList] = React.useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/api/menu')
+            .then(response => response.json())
+            .then(data => {
+                setMenuList(data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }, []);
 
     const handleTableRowClick = (row) => {
         navigate(`/menu/${row.id}`);
@@ -53,7 +53,7 @@ function Menu() {
             </Button>
         </Box>
         <DataGrid
-            rows={rows}
+            rows={menuList}
             columns={columns}
             initialState={{
                 pagination: {
