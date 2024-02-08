@@ -21,7 +21,7 @@ from rest_framework import routers
 from api.views import MenuViewSet
 
 router =  routers.DefaultRouter()
-router.register(r'menus', MenuViewSet, 'menu')
+router.register(r'menu', MenuViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
