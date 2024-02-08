@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'startDate', headerName: 'Star Date', width: 130 },
-    { field: 'endDate', headerName: 'End name', width: 130 }
+    { field: 'start_date', headerName: 'Star Date', width: 130 },
+    { field: 'end_date', headerName: 'End name', width: 130 }
   ];
 
 function Menu() {
@@ -16,7 +16,7 @@ function Menu() {
     const [menuList, setMenuList] = React.useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/menu')
+        fetch('/api/menu')
             .then(response => response.json())
             .then(data => {
                 setMenuList(data);
