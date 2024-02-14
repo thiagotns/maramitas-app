@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Typography, Fab } from "@mui/material";
-import Modal from '@mui/material/Modal';
+import { Box, Button, Typography, Fab, Modal, Stack } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
-import Stack from '@mui/material/Stack';
 import dayjs from 'dayjs';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'start_date', headerName: 'Star Date', width: 130 },
+    { field: 'start_date', headerName: 'Start Date', width: 130 },
     { field: 'end_date', headerName: 'End name', width: 130 }
   ];
 
@@ -64,7 +62,27 @@ function Menu() {
     }
 
     const handleSaveButtonClick = () => {
-        console.log(newMenu);
+        const formatedMenu = {
+            start_date: dayjs(newMenu.start_date).format('YYYY-MM-DD'),
+            end_date: dayjs(newMenu.end_date).format('YYYY-MM-DD')
+        }
+
+        fetch('/api/menu/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formatedMenu)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            navigate(`/menu/${data.id}`, {state: {id: data.id, message: 'Successfully created!'}});
+            handleClose();
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
     }
 
     return (
