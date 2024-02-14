@@ -25,7 +25,7 @@ class MenuItem(models.Model):
     description = models.CharField(max_length=300)
     type = models.CharField(max_length=20)
 
-    menu = models.ForeignKey(Menu, on_delete=models.PROTECT)
+    menu = models.ForeignKey(Menu, on_delete=models.PROTECT, related_name='items')
     options = models.ManyToManyField(Option)
 
     def __str__(self):
