@@ -2,15 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-class Menu(models.Model):
-
-    start_date = models.DateField()
-    end_date = models.DateField()
-
-    def __str__(self):
-        return "Menu from " + str(self.start_date) + " to " + str(self.end_date)
-
-
 class Option(models.Model):
 
     name = models.CharField(max_length=100)
@@ -18,6 +9,17 @@ class Option(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Menu(models.Model):
+
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    avaliable_options = Option.objects.all()
+
+    def __str__(self):
+        return "Menu from " + str(self.start_date) + " to " + str(self.end_date)
 
 class MenuItem(models.Model):
 
@@ -30,3 +32,6 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name
+
+    def options_name(self):
+        return ", ".join([p.name for p in self.options.all()])
