@@ -19,9 +19,11 @@ from django.urls import path, include
 
 from rest_framework import routers
 from api.views import MenuViewSet
+from api.views import MenuItemViewSet
 
 router =  routers.DefaultRouter()
 router.register(r'menu', MenuViewSet)
+router.register(r'menu-item', MenuItemViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
