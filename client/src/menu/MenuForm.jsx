@@ -5,6 +5,11 @@ import { Button, Container, Grid, Paper, Box, Fab } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,9 +24,11 @@ function MenuForm(){
     const location = useLocation();
     const [menu, setMenu] = React.useState({});
     const [editItem, setEditItem] = React.useState({});
+    const [deleteItem, setDeleteItem] = React.useState({}); 
     const [avaliableOptions, setAvaliableOptions] = React.useState([]);
     const [openModal, setOpenModal] = React.useState(false);
     const [openAlert, setOpenAlert] = React.useState(location.state && location.state.message);
+    const [openDialog, setOpenDialog] = React.useState(false);
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1 },
@@ -41,7 +48,7 @@ function MenuForm(){
                 <GridActionsCellItem
                     icon={<DeleteIcon />}
                     label="Delete"
-                    onClick={ () => {console.log("Delete: " + params.row.id)}}
+                    onClick={ () => {handleDeleteGridButtonClick(params.row)}}
                 />,
             ],
           }
@@ -62,6 +69,40 @@ function MenuForm(){
         setOpenModal(false)
     };
 
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    const handleAddItemButtonClick = () => {   
+        setOpenModal(true);
+    }
+
+    const handleDeleteGridButtonClick = (row) => {
+        setDeleteItem(row);
+        setOpenDialog(true);
+    };
+
+    const handleDeleteGridClick = () => {
+        
+        fetch(`/api/menu-item/${deleteItem.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(data => {
+            console.log('Success.');
+            console.log(data);
+            setMenu({...menu, items: menu.items.filter(item => item.id !== deleteItem.id)});
+            setOpenDialog(false);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+
+    };
+
+
     useEffect(() => {
 
         if(!id) return;
@@ -79,12 +120,6 @@ function MenuForm(){
         
 
     }, [id]);
-
-    const handleAddItemButtonClick = () => {
-        
-        setOpenModal(true);
-
-    }
 
     return (
         <>
@@ -156,6 +191,26 @@ function MenuForm(){
             handleCloseModal={handleCloseModal} 
             avaliableOptions={avaliableOptions}
         />
+        <Dialog
+            open={openDialog}
+            onClose={handleCloseDialog}
+        >
+            <DialogTitle>Delete Item</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Do you want delete "{deleteItem.name}"?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDialog} autoFocus>Cancel</Button>
+                <Button onClick={handleDeleteGridClick} variant="outlined" 
+                    startIcon={<DeleteIcon />} 
+                    color="error"
+                >
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog>
         </>
     );
 }
