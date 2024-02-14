@@ -20,10 +20,13 @@ from django.urls import path, include
 from rest_framework import routers
 from api.views import MenuViewSet
 from api.views import MenuItemViewSet
+from api.views import OptionViewSet
 
 router =  routers.DefaultRouter()
 router.register(r'menu', MenuViewSet)
 router.register(r'menu-item', MenuItemViewSet)
+router.register(r'option', OptionViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
