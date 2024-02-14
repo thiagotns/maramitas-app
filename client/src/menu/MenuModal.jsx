@@ -20,7 +20,7 @@ const MenuTypeEnum = {
     PREMIUM: "Premium"
 }
 
-function ModalForm({menu, setMenu, editItem, setEditItem, open, handleCloseModal, avaliableOptions}){
+function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliableOptions}){
 
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -32,16 +32,14 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, handleCloseModal
     const [menuOptionsError, setMenuOptionsError] = React.useState(false);
 
     useEffect(() => {
+
         if(editItem.id){
             setName(editItem.name);
             setDescription(editItem.description);
             setMenuType(editItem.type);
             setMenuOptions(editItem.options);
-
-            console.log("EditItem: ", editItem);
-            console.log("MenuOptions: ", menuOptions);
-
         }
+
     }, [editItem]);
     
     const optionsToSelect = avaliableOptions.map((option) => {
@@ -55,6 +53,19 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, handleCloseModal
             </ToggleButton>
         )
     });
+
+    const handleCloseModal = () => {
+        setName("");
+        setDescription("");
+        setMenuType(MenuTypeEnum.TRADICIONAL);
+        setMenuOptions([]);
+        setNameError(false);
+        setDescriptionError(false);
+        setMenuOptionsError(false);
+        setEditItem({});
+
+        setOpen(false);
+    };
 
     const handleMenuType = (event, newMenuType) => {
         setMenuType(newMenuType);
@@ -122,7 +133,11 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, handleCloseModal
                 return avaliableOptions.find(option => option.id === element).name; 
             }).join(", ");
 
-            setMenu({...menu, items: [...menu.items, data]});
+            if(editItem.id){
+                setMenu({...menu, items: menu.items.map(item => item.id === data.id ? data : item)});
+            } else {
+                setMenu({...menu, items: [...menu.items, data]});
+            }
 
             handleCloseModal();
         })

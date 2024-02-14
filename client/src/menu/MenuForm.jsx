@@ -27,7 +27,7 @@ function MenuForm(){
     const [deleteItem, setDeleteItem] = React.useState({}); 
     const [avaliableOptions, setAvaliableOptions] = React.useState([]);
     const [openModal, setOpenModal] = React.useState(false);
-    const [openAlert, setOpenAlert] = React.useState(location.state && location.state.message);
+    const [openAlert, setOpenAlert] = React.useState(false/*location.state && location.state.message*/);
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const columns = [
@@ -65,10 +65,6 @@ function MenuForm(){
     
     }
     
-    const handleCloseModal = () => {
-        setOpenModal(false)
-    };
-
     const handleCloseDialog = () => {
         setOpenDialog(false);
     };
@@ -127,7 +123,7 @@ function MenuForm(){
             <Grid item xs={12} md={12}>
                 <Box sx={{display: openAlert ? 'block' : 'none'}}>
                     <Alert icon={<CheckIcon />} severity="success"  onClose={() => {setOpenAlert(false);}}>
-                        {location.state.message}
+                        Message here!
                     </Alert>
                 </Box>
                 <Paper sx={{padding: 2, marginTop: 1}}>
@@ -188,7 +184,7 @@ function MenuForm(){
             editItem={editItem}
             setEditItem={setEditItem}
             open={openModal} 
-            handleCloseModal={handleCloseModal} 
+            setOpen={setOpenModal}
             avaliableOptions={avaliableOptions}
         />
         <Dialog
