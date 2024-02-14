@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useLocation } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Button, Container, Grid, Paper, Box, Modal, Stack, Fab, TextField } from '@mui/material';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, Container, Grid, Paper, Box, Fab } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
@@ -13,45 +12,53 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import MenuModal from './MenuModal';
 
-const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'name', headerName: 'Name', flex: 10 },
-    { field: 'type', headerName: 'Type', flex: 4 },
-    { field: 'options_name', headerName: 'Options', flex: 4 },
-    {
-        field: 'actions',
-        type: 'actions',
-        flex: 2,
-        getActions: (params) => [
-            <GridActionsCellItem
-                icon={<EditIcon />}
-                label="Edit"
-                onClick={ () => {console.log("Edit: " + params.row.id)}}
-            />,
-            <GridActionsCellItem
-                icon={<DeleteIcon />}
-                label="Delete"
-                onClick={ () => {console.log("Delete: " + params.row.id)}}
-            />,
-        ],
-      }
-];
-
 
 function MenuForm(){
 
     const { id } = useParams();
     const location = useLocation();
     const [menu, setMenu] = React.useState({});
-    const [newItem, setNewItem] = React.useState({});
+    const [editItem, setEditItem] = React.useState({});
     const [avaliableOptions, setAvaliableOptions] = React.useState([]);
     const [openModal, setOpenModal] = React.useState(false);
     const [openAlert, setOpenAlert] = React.useState(location.state && location.state.message);
 
+    const columns = [
+        { field: 'id', headerName: 'ID', flex: 1 },
+        { field: 'name', headerName: 'Name', flex: 10 },
+        { field: 'type', headerName: 'Type', flex: 4 },
+        { field: 'options_name', headerName: 'Options', flex: 4 },
+        {
+            field: 'actions',
+            type: 'actions',
+            flex: 2,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={<EditIcon />}
+                    label="Edit"
+                    onClick={ () => {handleEditButtonClick(params.row)}}
+                />,
+                <GridActionsCellItem
+                    icon={<DeleteIcon />}
+                    label="Delete"
+                    onClick={ () => {console.log("Delete: " + params.row.id)}}
+                />,
+            ],
+          }
+    ];
+    
+
+    const handleEditButtonClick = (row) => {
+        
+        let optionsIds = row.options.map(option => option.id || option);
+        row.options = optionsIds;
+
+        setEditItem(row);
+        setOpenModal(true);
+    
+    }
+    
     const handleCloseModal = () => {
-        console.log("Close Modal");
-        console.log("New Item");
-        console.log(newItem);
         setOpenModal(false)
     };
 
@@ -63,8 +70,6 @@ function MenuForm(){
             .then(response => response.json())
             .then(data => {
                 setMenu(data);
-                console.log(data);
-
                 setAvaliableOptions(data.avaliable_options);
             })
             .catch(error => {
@@ -78,13 +83,6 @@ function MenuForm(){
     const handleAddItemButtonClick = () => {
         
         setOpenModal(true);
-
-    }
-
-    const handleSaveButtonClick = () => {
-
-        console.log("Save new Item");
-        console.log(newItem);
 
     }
 
@@ -152,8 +150,8 @@ function MenuForm(){
         <MenuModal 
             menu={menu}
             setMenu={setMenu}
-            newItem={newItem}
-            setNewItem={setNewItem}
+            editItem={editItem}
+            setEditItem={setEditItem}
             open={openModal} 
             handleCloseModal={handleCloseModal} 
             avaliableOptions={avaliableOptions}

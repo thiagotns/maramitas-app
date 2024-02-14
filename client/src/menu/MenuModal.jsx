@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useLocation } from 'react-router-dom';
-import { Button, Container, Grid, Paper, Box, Modal, Stack, Fab, TextField } from '@mui/material';
+import { Button, Box, Modal, Stack, TextField } from '@mui/material';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
@@ -21,7 +20,7 @@ const MenuTypeEnum = {
     PREMIUM: "Premium"
 }
 
-function ModalForm({menu, setMenu, newItem, setNewItem, open, handleCloseModal, avaliableOptions}){
+function ModalForm({menu, setMenu, editItem, setEditItem, open, handleCloseModal, avaliableOptions}){
 
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -32,6 +31,30 @@ function ModalForm({menu, setMenu, newItem, setNewItem, open, handleCloseModal, 
     const [descriptionError, setDescriptionError] = React.useState(false);
     const [menuOptionsError, setMenuOptionsError] = React.useState(false);
 
+    useEffect(() => {
+        if(editItem.id){
+            setName(editItem.name);
+            setDescription(editItem.description);
+            setMenuType(editItem.type);
+            setMenuOptions(editItem.options);
+
+            console.log("EditItem: ", editItem);
+            console.log("MenuOptions: ", menuOptions);
+
+        }
+    }, [editItem]);
+    
+    const optionsToSelect = avaliableOptions.map((option) => {
+
+        return (
+            <ToggleButton key={option.id} value={option.id} sx={{flex: "1 1 0px;"}}>
+               <Stack>
+                   <Typography variant="body2">{option.name}</Typography>
+                   <Typography variant="caption">{option.price}</Typography>
+               </Stack>
+            </ToggleButton>
+        )
+    });
 
     const handleMenuType = (event, newMenuType) => {
         setMenuType(newMenuType);
@@ -73,8 +96,17 @@ function ModalForm({menu, setMenu, newItem, setNewItem, open, handleCloseModal, 
             menu: menu.id
         }
 
-        fetch('/api/menu-item/', {
-            method: 'POST',
+        let method = 'POST';
+        let editSufix = '';
+
+        if(editItem.id){
+            item.id = editItem.id;
+            method = 'PUT';
+            editSufix = `/${editItem.id}/`;
+        }
+        
+        fetch(`/api/menu-item/${editSufix}`, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -98,17 +130,6 @@ function ModalForm({menu, setMenu, newItem, setNewItem, open, handleCloseModal, 
             console.error('There was an error!', error);
         });
     }
-
-    const optionsToSelect = avaliableOptions.map((option) => {
-         return (
-             <ToggleButton key={option.id} value={option.id} sx={{flex: "1 1 0px;"}}>
-                <Stack>
-                    <Typography variant="body2">{option.name}</Typography>
-                    <Typography variant="caption">{option.price}</Typography>
-                </Stack>
-             </ToggleButton>
-         )
-     });
 
     return (
         <Modal
