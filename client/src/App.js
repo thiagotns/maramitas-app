@@ -5,12 +5,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import 'dayjs/locale/pt-br';
 
-import Menu from './menu/Menu';
-import MenuForm from './menu/MenuForm';
-import Home from './home/Home';
-import Orders from './orders/Orders';
-import Layout from './common/Layout';
-import Login from './auth/Login';
+import Menu from './components/Menu';
+import MenuForm from './components/MenuForm';
+import Home from './components/Home';
+import Orders from './components/Orders';
+import Layout from './components/common/Layout';
+import Login from './components/Login';
 
 function App() {
   return (
