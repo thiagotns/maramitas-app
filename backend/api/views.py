@@ -1,17 +1,22 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from .models import Menu, Option, MenuItem
 from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer
 
+
 class MenuViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
 class OptionViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
 
 class MenuItemViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
     queryset = MenuItem.objects.all()
     
     def get_serializer_class(self):
