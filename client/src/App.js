@@ -10,6 +10,7 @@ import MenuForm from './menu/MenuForm';
 import Home from './home/Home';
 import Orders from './orders/Orders';
 import Layout from './common/Layout';
+import Login from './auth/Login';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/menu/create" element={<MenuForm />} />
               <Route path="/menu/:id" element={<MenuForm />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/login" element={<Login />} />
           </Routes>
         </LocalizationProvider>
       </Layout>
