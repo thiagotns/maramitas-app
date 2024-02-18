@@ -11,19 +11,25 @@ import Home from './components/Home';
 import Orders from './components/Orders';
 import Layout from './components/common/Layout';
 import Login from './components/Login';
+import PrivateRoute from './components/common/PrivateRoute';
 
 function App() {
+
   return (
     <>
       <Layout>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
           <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/menu/create" element={<MenuForm />} />
-              <Route path="/menu/:id" element={<MenuForm />} />
-              <Route path="/orders" element={<Orders />} />
               <Route path="/login" element={<Login />} />
+
+              <Route element={<PrivateRoute />}>
+                <Route path="/menu" element={<Menu />} />
+                <Route path="/menu/create" element={<MenuForm />} />
+                <Route path="/menu/:id" element={<MenuForm />} />
+                <Route path="/orders" element={<Orders />} />
+              </Route>
+              
           </Routes>
         </LocalizationProvider>
       </Layout>

@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
+import {axiosPrivate} from '../api/axios';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -39,14 +40,16 @@ function Menu() {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        fetch('/api/menu')
-            .then(response => response.json())
-            .then(data => {
-                setMenuList(data);
+
+        axiosPrivate.get('/api/menu/')
+            .then(response => {
+                console.log("response", response);
+                setMenuList(response.data);
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
+        
     }, []);
 
     const handleTableRowClick = (row) => {

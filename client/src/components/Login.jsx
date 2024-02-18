@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -6,11 +8,21 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import useAppAuth from "../hooks/useAppAuth";
+import {axiosPublic} from "../api/axios";
 
 function Login() {
 
+    const [, setAppAuth] = useAppAuth();
+    
     const [usernameError, setUsernameError] = React.useState(false);
     const [passwordError, setPasswordError] = React.useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from.pathname || "/" ;
+
+    console.log("from", from);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -33,10 +45,24 @@ function Login() {
             return;
         }
 
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        axiosPublic.post('/api/token/', {
+            username: data.get('username'),
+            password: data.get('password')
+        }).then((response) => {
+            
+            setAppAuth({
+                token: response.data.access,
+                refreshToken: response.data.refresh,
+                name: response.data.name,
+                username: response.data.username,
+            });
+
+            navigate(from , { replace: true });
+
+        }).catch((error) => {
+            console.log(error);
         });
+        
     };
 
     return (

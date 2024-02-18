@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { AppAuthProvider } from './contexts/AppAuthProvider';
 import reportWebVitals from './reportWebVitals';
+import AxiosInterceptors from './api/AxiosInterceptors';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AppAuthProvider>
+        <AxiosInterceptors>
+          <App />
+        </AxiosInterceptors>
+      </AppAuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
