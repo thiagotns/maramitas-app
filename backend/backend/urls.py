@@ -21,8 +21,8 @@ from rest_framework import routers
 from api.views import MenuViewSet
 from api.views import MenuItemViewSet
 from api.views import OptionViewSet
-
-from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
+from api.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 router =  routers.DefaultRouter()
 router.register(r'menu', MenuViewSet)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Menu, Option, MenuItem
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,3 +27,15 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'start_date', 'end_date', 'items', 'avaliable_options')
+
+
+class TokenObtainPairSerializer(TokenObtainPairSerializer):
+    
+    def validate(self, attrs):
+            data = super().validate(attrs)
+    
+            user = self.user
+            data["user_id"] = user.id
+            data["username"] = user.username
+    
+            return data

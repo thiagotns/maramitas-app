@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Menu, Option, MenuItem
-from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer
+from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer
 
 
 class MenuViewSet(viewsets.ModelViewSet):
@@ -30,3 +31,6 @@ class MenuItemViewSet(viewsets.ModelViewSet):
              # in multiple tables, only use it when necessary
              return MenuItemReadSerializer
          return MenuItemSerializer
+    
+class TokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
