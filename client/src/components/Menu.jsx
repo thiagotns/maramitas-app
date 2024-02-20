@@ -10,7 +10,7 @@ import {axiosPrivate} from '../api/axios';
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'start_date', headerName: 'Start Date', width: 130 },
-    { field: 'end_date', headerName: 'End name', width: 130 }
+    { field: 'end_date', headerName: 'End Date', width: 130 }
   ];
 
 const modalStyle = {
