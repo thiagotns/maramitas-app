@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Box, Modal, Stack, TextField } from '@mui/material';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { axiosPrivate } from "../api/axios";
 
 const modalStyle = {
     position: 'absolute',
@@ -113,30 +114,27 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliab
         if(editItem.id){
             item.id = editItem.id;
             method = 'PUT';
-            editSufix = `/${editItem.id}/`;
+            editSufix = `${editItem.id}/`;
         }
         
-        fetch(`/api/menu-item/${editSufix}`, {
+        axiosPrivate({
             method: method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
+            url: `/api/menu-item/${editSufix}`,
+            data: item
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => {
             
             console.log('Success.');
-            console.log(data);
+            console.log(response.data);
 
-            data.options_name = data.options.map(element => { 
+            response.data.options_name = response.data.options.map(element => { 
                 return avaliableOptions.find(option => option.id === element).name; 
             }).join(", ");
 
             if(editItem.id){
-                setMenu({...menu, items: menu.items.map(item => item.id === data.id ? data : item)});
+                setMenu({...menu, items: menu.items.map(item => item.id === response.data.id ? response.data : item)});
             } else {
-                setMenu({...menu, items: [...menu.items, data]});
+                setMenu({...menu, items: [...menu.items, response.data]});
             }
 
             handleCloseModal();

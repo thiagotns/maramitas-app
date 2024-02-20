@@ -16,7 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import MenuModal from './MenuModal';
-
+import {axiosPrivate} from '../api/axios';
 
 function MenuForm(){
 
@@ -80,15 +80,10 @@ function MenuForm(){
 
     const handleDeleteGridClick = () => {
         
-        fetch(`/api/menu-item/${deleteItem.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(data => {
+        axiosPrivate.delete(`/api/menu-item/${deleteItem.id}`)
+        .then(response => {
             console.log('Success.');
-            console.log(data);
+            console.log(response.data);
             setMenu({...menu, items: menu.items.filter(item => item.id !== deleteItem.id)});
             setOpenDialog(false);
         })
@@ -103,11 +98,10 @@ function MenuForm(){
 
         if(!id) return;
 
-        fetch(`/api/menu/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                setMenu(data);
-                setAvaliableOptions(data.avaliable_options);
+        axiosPrivate.get(`/api/menu/${id}`)
+            .then(response => {
+                setMenu(response.data);
+                setAvaliableOptions(response.data.avaliable_options);
             })
             .catch(error => {
                 console.error('There was an error!', error);

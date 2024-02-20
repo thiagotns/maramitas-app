@@ -35,7 +35,8 @@ function AxiosInterceptors({children}) {
                 if (error.response && error.response.status === 401 && !prevRequest._retry) {
                     prevRequest._retry = true;
                     console.log("AxiosInterceptors [response] 401 error");
-                    // Refresh token
+                    console.log("AxiosInterceptors [response] Refresh token");
+                    console.log("AxiosInterceptors [response] appAuth.refreshToken", appAuth.refreshToken)
                     
                     axiosPublic.post('/api/token/refresh/', {
                         refreshToken: appAuth.refreshToken
@@ -45,8 +46,9 @@ function AxiosInterceptors({children}) {
                         return axiosPrivate(prevRequest);
                     }).catch((error) => {
                         console.log("AxiosInterceptors [response] 401 error - refresh token error");
+                        console.log("AxiosInterceptors [response] Will logout");
                         console.log(error);
-                        //setAppAuth(null);
+                        setAppAuth(null);
                     });
                 }
 
