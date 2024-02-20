@@ -13,14 +13,23 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import useAppauth from '../../hooks/useAppAuth';
 
 const pages = ['Menu', 'Orders', 'Customers', 'Reports'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 function MaraAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [selected, setSelected] = React.useState(pages[0]);
+  const [appAuth, setAppAuth] = useAppauth();
+
+  if(appAuth && appAuth.token) {
+    console.log("Tá logado");
+  } else {
+    console.log("Não tá logado");
+  }
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,6 +50,15 @@ function MaraAppBar() {
   const onClickMenuItem = (page) => {
     setSelected(page);
     handleCloseNavMenu();
+  };
+
+  const onClickSettingsItem = (page) => {
+
+    if(page === 'Logout') {
+      setAppAuth({});
+    }
+
+    handleCloseUserMenu();
   };
 
   return (
@@ -66,7 +84,7 @@ function MaraAppBar() {
             LOGO
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} display={appAuth && appAuth.token} >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -92,7 +110,7 @@ function MaraAppBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: (appAuth && appAuth.token)  ? { xs: 'block', md: 'none' } : "none",
               }}
             >
               {pages.map((page) => (
@@ -126,7 +144,7 @@ function MaraAppBar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: (appAuth && appAuth.token) ? { xs: 'none', md: 'flex' } : "none" }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -147,10 +165,10 @@ function MaraAppBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display: (appAuth && appAuth.token) ? "flex" : "none" }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
+                {<Avatar />}
               </IconButton>
             </Tooltip>
             <Menu
@@ -170,7 +188,7 @@ function MaraAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => {onClickSettingsItem(setting)}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
