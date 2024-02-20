@@ -20,10 +20,10 @@ function App() {
       <Layout>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
           <Routes>
-              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
 
               <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/menu/create" element={<MenuForm />} />
                 <Route path="/menu/:id" element={<MenuForm />} />
