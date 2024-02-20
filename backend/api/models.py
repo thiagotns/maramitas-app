@@ -35,3 +35,23 @@ class MenuItem(models.Model):
 
     def options_name(self):
         return ", ".join([p.name for p in self.options.all()])
+    
+class Neighbourhood(models.Model):
+    
+    name = models.CharField(max_length=100)
+    delivery_fee = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+class Customer(models.Model):
+
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=10)
+    address = models.CharField(max_length=300)
+    
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+    
