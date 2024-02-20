@@ -11,10 +11,7 @@ function AxiosInterceptors({children}) {
         const requestInterceptor = axiosPrivate.interceptors.request.use(
             (config) => {
 
-                console.log("AxiosInterceptors [request] config");
-
                 if (appAuth && appAuth.token) {
-                    console.log("AxiosInterceptors [request] appAuth.token", appAuth.token);
                     config.headers.Authorization = `Bearer ${appAuth.token}`;
                 }
 
