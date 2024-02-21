@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Menu, Option, MenuItem, Area, Customer
 from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, AreaSerializer, CustomerSerializer, CustomerReadSerializer
-
+from django.http import HttpResponse
+from backend.settings import BASE_DIR
+import os
 
 class MenuViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
@@ -48,3 +52,11 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
 class TokenObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
+
+
+def publicMenuView(request):
+
+    file_path = os.path.join(BASE_DIR, 'api/templates/menu-template.html')
+    html_content = open(file_path, "r")
+    
+    return HttpResponse(html_content)

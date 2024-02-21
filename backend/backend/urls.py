@@ -24,6 +24,7 @@ from api.views import OptionViewSet
 from api.views import TokenObtainPairView
 from api.views import AreaViewSet
 from api.views import CustomerViewSet
+from api.views import publicMenuView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 router =  routers.DefaultRouter()
@@ -39,4 +40,6 @@ urlpatterns = [
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    path('public/menu/', publicMenuView, name='public_menu'),
 ]
