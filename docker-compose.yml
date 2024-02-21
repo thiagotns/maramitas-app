@@ -31,5 +31,27 @@ services:
     depends_on:
       - db
 
+  client:
+    container_name: maramitas_client
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  nginx:
+    image: pagespeed/nginx-pagespeed:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+
 volumes:
   mysql_data:
