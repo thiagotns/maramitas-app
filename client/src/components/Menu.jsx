@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Typography, Fab, Modal, Stack } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import axios from "axios";
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -27,16 +28,14 @@ const modalStyle = {
 
 function Menu() {
 
-    let newMenu = {
-        start_date: new Date(),
-        end_date: new Date()
-    };
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
-    const [menuList, setMenuList] = React.useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [menuList, setMenuList] = useState([]);
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -59,30 +58,22 @@ function Menu() {
     }
 
     const handleCreateButtonClick = () => {
-        newMenu = {
-            start_date: new Date(),
-            end_date: new Date()
-        }
+        setStartDate(dayjs());
+        setEndDate(dayjs());
+
         handleOpen();
     }
 
     const handleSaveButtonClick = () => {
         const formatedMenu = {
-            start_date: dayjs(newMenu.start_date).format('YYYY-MM-DD'),
-            end_date: dayjs(newMenu.end_date).format('YYYY-MM-DD')
+            start_date: dayjs(startDate).format('YYYY-MM-DD'),
+            end_date: dayjs(endDate).format('YYYY-MM-DD')
         }
 
-        fetch('/api/menu/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formatedMenu)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            navigate(`/menu/${data.id}`, {state: {id: data.id, message: 'Successfully created!'}});
+        axiosPrivate.post('/api/menu/', formatedMenu)
+        .then(response => {
+            console.log('Success:', response.data);
+            navigate(`/menu/${response.data.id}`, {state: {id: response.data.id, message: 'Successfully created!'}});
             handleClose();
         })
         .catch(error => {
@@ -119,8 +110,19 @@ function Menu() {
                     Create Menu
                 </Typography>
                 <Stack spacing={2}>
-                    <DatePicker label="Start Date" value={dayjs(newMenu.start_date)}/>
-                    <DatePicker label="End Date" value={dayjs(newMenu.end_date)}/>
+                    <DatePicker label="Start Date"
+                     value={startDate}
+                     onChange={(event) => {
+                        console.log("event", event);
+                        setStartDate(event)
+                    }}
+                     />
+                    <DatePicker label="End Date" 
+                    value={endDate}
+                    onChange={(event) => {
+                        console.log("event", event);
+                        setEndDate(event)
+                    }}/>
                     <Box sx={{display: "flex", justifyContent: "flex-end"}}>
                         <Button color="primary" onClick={handleClose} sx={{marginRight: 1}}>Cancel</Button>
                         <Button variant="contained" color="primary" onClick={handleSaveButtonClick}>Save</Button>
