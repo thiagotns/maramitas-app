@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,17 +12,19 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import useAppauth from '../../hooks/useAppAuth';
 
 const pages = ['Menu', 'Orders', 'Customers', 'Reports'];
 const settings = ['Logout'];
 
 function MaraAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [selected, setSelected] = React.useState(pages[0]);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [selected, setSelected] = useState(pages[0]);
   const [appAuth, setAppAuth] = useAppauth();
+
+  const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -53,6 +55,15 @@ function MaraAppBar() {
 
     handleCloseUserMenu();
   };
+
+  useEffect(() => {
+    
+    const path = location.pathname.split('/')[1];
+    
+    //capitalize the first letter
+    setSelected(path.charAt(0).toUpperCase() + path.slice(1));
+
+  }, []);
 
   return (
     <AppBar position="static">
