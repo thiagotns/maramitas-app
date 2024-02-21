@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-import {axiosPrivate} from '../api/axios';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -31,6 +31,8 @@ function Menu() {
         start_date: new Date(),
         end_date: new Date()
     };
+
+    const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
     const [menuList, setMenuList] = React.useState([]);

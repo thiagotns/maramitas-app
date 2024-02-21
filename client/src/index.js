@@ -5,16 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { AppAuthProvider } from './contexts/AppAuthProvider';
 import reportWebVitals from './reportWebVitals';
-import AxiosInterceptors from './api/AxiosInterceptors';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AppAuthProvider>
-        <AxiosInterceptors>
-          <App />
-        </AxiosInterceptors>
+        <App />
       </AppAuthProvider>
     </BrowserRouter>
   </React.StrictMode>

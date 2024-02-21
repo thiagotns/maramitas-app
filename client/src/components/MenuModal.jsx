@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Box, Modal, Stack, TextField } from '@mui/material';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { axiosPrivate } from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const modalStyle = {
     position: 'absolute',
@@ -31,6 +31,8 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliab
     const [nameError, setNameError] = React.useState(false);
     const [descriptionError, setDescriptionError] = React.useState(false);
     const [menuOptionsError, setMenuOptionsError] = React.useState(false);
+
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
 

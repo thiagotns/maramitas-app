@@ -9,8 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {axiosPrivate} from '../api/axios';
 import CustomerModal from "./CustomerModal";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 function Customer() {
 
@@ -46,6 +46,8 @@ function Customer() {
     const [editCustomer, setEditCustomer] = React.useState({});
     const [deleteCustomer, setDeleteCustomer] = React.useState({});
     
+    const axiosPrivate = useAxiosPrivate();
+
     const handleOpen = () => setOpen(true);
 
     useEffect(() => {

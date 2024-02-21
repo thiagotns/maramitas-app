@@ -16,7 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import MenuModal from './MenuModal';
-import {axiosPrivate} from '../api/axios';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 function MenuForm(){
 
@@ -29,6 +29,8 @@ function MenuForm(){
     const [openModal, setOpenModal] = React.useState(false);
     const [openAlert, setOpenAlert] = React.useState(false/*location.state && location.state.message*/);
     const [openDialog, setOpenDialog] = React.useState(false);
+
+    const axiosPrivate = useAxiosPrivate();
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1 },

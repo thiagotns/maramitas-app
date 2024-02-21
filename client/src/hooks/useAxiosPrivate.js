@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { axiosPrivate, axiosPublic } from './axios.js';
-import useAppAuth from '../hooks/useAppAuth.js';
+import { useEffect } from "react";
+import { axiosPrivate, axiosPublic } from "../api/axios";
+import useAppAuth from "./useAppAuth";
 
-function AxiosInterceptors({children}) {
+const useAxiosPrivate = () => {
 
     const [ appAuth, setAppAuth ] = useAppAuth();
 
@@ -59,8 +59,8 @@ function AxiosInterceptors({children}) {
         };
 
     }, [appAuth, setAppAuth]);
-    
-    return children;
+
+    return axiosPrivate;
 }
 
-export default AxiosInterceptors;
+export default useAxiosPrivate;

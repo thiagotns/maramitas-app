@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Box, Modal, Stack, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { axiosPrivate } from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const modalStyle = {
     position: 'absolute',
@@ -25,6 +25,8 @@ function CustomerModal({customerList, setCustomerList, editCustomer, setEditCust
     const [nameError, setNameError] = React.useState(false);
     const [phoneError, setPhoneError] = React.useState(false);
     
+    const axiosPrivate = useAxiosPrivate();
+
     useEffect(() => {
 
         if(editCustomer?.id){
