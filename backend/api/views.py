@@ -58,5 +58,25 @@ def publicMenuView(request):
 
     file_path = os.path.join(BASE_DIR, 'api/templates/menu-template.html')
     html_content = open(file_path, "r")
+
+    id = request.GET.get('id')
+
+    if id:
+        menu = Menu.objects.get(id=id)
+
+        items = menu.items
+
+        tradicional_html = ""
+        premium_html = ""
+
+        for item in items.all():
+
+            if item.type == "Tradicional":
+                tradicional_html += f"<li><h3>{item.name}</h3><p>{item.description}</p></li>\n"
+
+            if item.type == "Premium":
+                premium_html += f"<li><h3>{item.name}</h3><p>{item.description}</p></li>\n"
+
+        html_content = html_content.read().replace("[itens_tradicional]", tradicional_html).replace("[itens_premium]", premium_html)
     
     return HttpResponse(html_content)

@@ -21,13 +21,14 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
         .menu {
             width: 768px;
             padding-top: 10px;
-            padding-bottom: 10px;
-            background-image: url('background.png');
+            background-image: url('https://maragastronomia.com.br/img/background.png');
         }
 
         .header-content{
@@ -125,6 +126,69 @@
             color: #FF914D;
         }
 
+        .header-2{
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .premium{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: flex-end;
+            height: 40px;
+            width: 300px;
+            color: #f2ffff;
+            background-color: #004AAD;
+            font-family: "IM Fell English SC";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 22px;            
+        }
+
+        .combos{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 400px;
+            color: #004AAD;
+            background-color: #FEDA45;
+            font-family: Alice, serif;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 22px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .combos h3{
+            padding-bottom: 10px;
+        }
+
+        .footer {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer .contact {
+            font-family: "IM Fell English SC";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 22px;
+            color: #f2ffff;
+            background-color: #004AAD;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -132,7 +196,7 @@
         <div class="menu">
             <div class="header-content">
                 <div class="header">
-                    <img src="logo.jpg" alt="Logo Maramitas" />
+                    <img src="https://maragastronomia.com.br/img/logo.jpg" alt="Logo Maramitas" />
                     <div class="label">
                         <span>MENU <br />DIGITAL</span>
                     </div>
@@ -143,27 +207,29 @@
                 </div>
             </div>
             <ul>
-                <li>
-                    <h3>SOBRECOXA NA CERVEJA</h3>
-                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
-                </li>
-                <li>
-                    <h3>SOBRECOXA NA CERVEJA</h3>
-                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
-                </li>
-                <li>
-                    <h3>SOBRECOXA NA CERVEJA</h3>
-                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
-                </li>
-                <li>
-                    <h3>SOBRECOXA NA CERVEJA</h3>
-                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
-                </li>
-                <li>
-                    <h3>SOBRECOXA NA CERVEJA</h3>
-                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
-                </li>
+                [itens_tradicional]
             </ul>
+            <div class="header-2">
+                <div class="premium">
+                    <span>PREMIUM</span>
+                </div>
+
+                <div class="combos">
+                    <h3>COMBOS</h3>
+                    <span>5 Marmitas - R$92,50</span>
+                    <span>10 Marmitas - R$175,00</span>
+                    <span>15 Marmitas - R$247,50</span>
+                </div>
+            </div>
+            <ul>
+                [itens_premium]
+            </ul>
+            <div class="footer">
+                <div class="contact">
+                    @MARAMITASSLZ
+                </div>
+            </div>
         </div>
+    </div>
 </body>
 </html>
