@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maramitas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu {
+            width: 768px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-image: url('background.png');
+        }
+
+        .header-content{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            width: 100%;
+            height: 250px;
+            padding-left: 40px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .header img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .header .label {
+            width: 250px;
+            height: 100%;
+            text-align: right;
+            color: #f2ffff;
+            background-color: #004AAD;
+            padding-top: 30px;
+            padding-right: 60px;
+            font-family: "IM Fell English SC";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        .tradicionais {
+            position: relative;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            align-self: flex-end;
+            height: 40px;
+            width: 470px;
+            background-color: #FEDA45;
+            font-family: "IM Fell English SC";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 22px;
+            color: #004AAD;
+            margin-top: -60px;
+            padding-left: 20px;
+            padding-top: 5px;
+            z-index: 2;
+        }
+
+        .tradicionais .circle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #FEDA45;
+            border-radius: 50%;
+            right: -10px;
+        }
+
+        .menu ul {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            list-style: none;
+            padding-top: 20px;
+            padding-left: 20px;
+
+        }
+
+        .menu ul li {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .menu ul li h3 {
+            font-family: "IM Fell English";
+            font-style: bold;
+            font-weight: 400;
+            font-size: 22px;
+            color: #004AAD;
+        }
+
+        .menu ul li p {
+            padding-left: 10px;
+            font-family: "Alice", serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 18px;
+            color: #FF914D;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="header-content">
+                <div class="header">
+                    <img src="logo.jpg" alt="Logo Maramitas" />
+                    <div class="label">
+                        <span>MENU <br />DIGITAL</span>
+                    </div>
+                </div>
+                <div class="tradicionais">
+                    <span>TRADICIONAIS</span>
+                    <span class="circle"></span>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <h3>SOBRECOXA NA CERVEJA</h3>
+                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
+                </li>
+                <li>
+                    <h3>SOBRECOXA NA CERVEJA</h3>
+                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
+                </li>
+                <li>
+                    <h3>SOBRECOXA NA CERVEJA</h3>
+                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
+                </li>
+                <li>
+                    <h3>SOBRECOXA NA CERVEJA</h3>
+                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
+                </li>
+                <li>
+                    <h3>SOBRECOXA NA CERVEJA</h3>
+                    <p>Frango desossado, marinado na cerveja e assado na brasa.</p>
+                </li>
+            </ul>
+        </div>
+</body>
+</html>
