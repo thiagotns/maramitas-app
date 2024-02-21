@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .models import Menu, Option, MenuItem, Neighbourhood, Customer
-from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, NeighbourhoodSerializer, CustomerSerializer
+from .models import Menu, Option, MenuItem, Area, Customer
+from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, AreaSerializer, CustomerSerializer, CustomerReadSerializer
 
 
 class MenuViewSet(viewsets.ModelViewSet):
@@ -32,15 +32,19 @@ class MenuItemViewSet(viewsets.ModelViewSet):
              return MenuItemReadSerializer
          return MenuItemSerializer
     
-class NeibourhoodViewSet(viewsets.ModelViewSet):
+class AreaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
-    queryset = Neighbourhood.objects.all()
-    serializer_class = NeighbourhoodSerializer
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
 
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
     queryset = Customer.objects.all()
-    serializer_class = CustomerSerializer
     
+    def get_serializer_class(self):
+         if self.request.method in ['GET']:
+             return CustomerReadSerializer
+         return CustomerSerializer
+
 class TokenObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer

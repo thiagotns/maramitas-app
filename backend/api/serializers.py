@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Menu, Option, MenuItem, Neighbourhood, Customer
+from .models import Menu, Option, MenuItem, Area, Customer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class OptionSerializer(serializers.ModelSerializer):
@@ -28,15 +28,23 @@ class MenuSerializer(serializers.ModelSerializer):
         model = Menu
         fields = ('id', 'start_date', 'end_date', 'items', 'avaliable_options')
 
-class NeighbourhoodSerializer(serializers.ModelSerializer):
+class AreaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Neighbourhood
+        model = Area
         fields = ('id', 'name', 'delivery_fee')
+
+class CustomerReadSerializer(serializers.ModelSerializer):
+
+    area = AreaSerializer(read_only=True)
+    
+    class Meta:
+        model = Customer
+        fields = ('id', 'name', 'phone', 'address', 'area')
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ('id', 'name', 'phone', 'address', 'neighbourhood')
+        fields = ('id', 'name', 'phone', 'address', 'area')
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
     

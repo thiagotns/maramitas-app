@@ -24,13 +24,6 @@ function MaraAppBar() {
   const [selected, setSelected] = React.useState(pages[0]);
   const [appAuth, setAppAuth] = useAppauth();
 
-  if(appAuth && appAuth.token) {
-    console.log("Tá logado");
-  } else {
-    console.log("Não tá logado");
-  }
-
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

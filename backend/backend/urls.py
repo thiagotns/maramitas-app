@@ -22,7 +22,7 @@ from api.views import MenuViewSet
 from api.views import MenuItemViewSet
 from api.views import OptionViewSet
 from api.views import TokenObtainPairView
-from api.views import NeibourhoodViewSet
+from api.views import AreaViewSet
 from api.views import CustomerViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -30,7 +30,7 @@ router =  routers.DefaultRouter()
 router.register(r'menu', MenuViewSet)
 router.register(r'menu-item', MenuItemViewSet)
 router.register(r'option', OptionViewSet)
-router.register(r'neibourhood', NeibourhoodViewSet)
+router.register(r'area', AreaViewSet)
 router.register(r'customer', CustomerViewSet)
 
 urlpatterns = [
