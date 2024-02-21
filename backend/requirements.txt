@@ -4,7 +4,9 @@ django-cors-headers==4.3.1
 django-dotenv==1.4.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
+gunicorn==21.2.0
 mysqlclient==2.2.3
+packaging==23.2
 PyJWT==2.8.0
 pytz==2024.1
 sqlparse==0.4.4
