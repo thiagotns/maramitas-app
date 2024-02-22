@@ -9,6 +9,7 @@ from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, M
 from django.http import HttpResponse
 from backend.settings import BASE_DIR
 import imgkit
+import hashlib
 import os
 
 class MenuViewSet(viewsets.ModelViewSet):
@@ -82,16 +83,26 @@ def publicMenuView(request):
 
         html_content = html_content.read().replace("[itens_tradicional]", tradicional_html).replace("[itens_premium]", premium_html).replace("[end_date]", menu.end_date.strftime("%d/%m/%Y"))
 
-    if type == "img":
-        img_options  = {
-            'format': 'jpg',
-            'crop-x': '128',
-            'crop-w': '768'
-        }
+        if type == "html":
+            return HttpResponse(html_content)
 
-        img = imgkit.from_string(html_content, False, options=img_options)
+        hash = hashlib.md5(html_content.encode()).hexdigest()
+
+        menu_file_name = f"{hash}.jpg"
+        menu_file_path = os.path.join(BASE_DIR, f"api/menu-files/{menu_file_name}")
+
+        if not os.path.exists(menu_file_path):
+
+            img_options  = {
+                'format': 'jpg',
+                'crop-x': '128',
+                'crop-w': '768'
+            }
+
+            imgkit.from_string(html_content, menu_file_path, options=img_options)
+    
+        img = open(menu_file_path, "rb")
+        
         response = HttpResponse(img, content_type="image/jpg")
         response['Content-Disposition'] = 'inline; filename="cardapio-mara.jpg"'
         return response
-    
-    return HttpResponse(html_content)

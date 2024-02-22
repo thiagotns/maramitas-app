@@ -25,3 +25,8 @@ secret_key.txt
 
 # Ignore all .DS_Store files
 .DS_Store
+
+# Ignore everything in this directory
+api/menu-files/*
+# Except this .gitkeep
+!api/menu-files/.gitkeep
