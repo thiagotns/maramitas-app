@@ -8,6 +8,7 @@ from .models import Menu, Option, MenuItem, Area, Customer
 from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, AreaSerializer, CustomerSerializer, CustomerReadSerializer
 from django.http import HttpResponse
 from backend.settings import BASE_DIR
+import imgkit
 import os
 
 class MenuViewSet(viewsets.ModelViewSet):
@@ -60,6 +61,7 @@ def publicMenuView(request):
     html_content = open(file_path, "r")
 
     id = request.GET.get('id')
+    type = request.GET.get('type')
 
     if id:
         menu = Menu.objects.get(id=id)
@@ -75,8 +77,21 @@ def publicMenuView(request):
                 tradicional_html += f"<li><h3>{item.name}</h3><p>{item.description}</p></li>\n"
 
             if item.type == "Premium":
-                premium_html += f"<li><h3>{item.name}</h3><p>{item.description}</p></li>\n"
+                price = f"R$ {item.options.get().price:.2f}"
+                premium_html += f"<li><h3>{item.name} - {price}</h3><p>{item.description}</p></li>\n"
 
-        html_content = html_content.read().replace("[itens_tradicional]", tradicional_html).replace("[itens_premium]", premium_html)
+        html_content = html_content.read().replace("[itens_tradicional]", tradicional_html).replace("[itens_premium]", premium_html).replace("[end_date]", menu.end_date.strftime("%d/%m/%Y"))
+
+    if type == "img":
+        img_options  = {
+            'format': 'jpg',
+            'crop-x': '128',
+            'crop-w': '768'
+        }
+
+        img = imgkit.from_string(html_content, False, options=img_options)
+        response = HttpResponse(img, content_type="image/jpg")
+        response['Content-Disposition'] = 'inline; filename="cardapio-mara.jpg"'
+        return response
     
     return HttpResponse(html_content)
