@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useLocation } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Button, Container, Grid, Paper, Box, Fab } from '@mui/material';
+import { Button, Grid, Paper, Box, Fab, Stack } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
@@ -13,6 +13,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import MenuModal from './MenuModal';
@@ -75,6 +76,32 @@ function MenuForm(){
         setOpenModal(true);
     }
 
+    const handleDownloadButtonClick = () => {
+        console.log("length", menu.items?.length > 0 );
+        
+        axiosPrivate.get(`/public/menu/?id=${id}`, {
+            responseType: 'blob'
+        }).then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+
+            const today = new Date().toJSON().slice(0,10) 
+
+            link.href = url;
+            link.setAttribute('download', `maramitas${today}.jpg`); 
+            document.body.appendChild(link);
+            link.click();
+
+            // clean up "a" element & remove ObjectURL
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+        }).catch(error => {
+            console.error('There was an error!', error);
+        });
+
+    }
+
     const handleDeleteGridButtonClick = (row) => {
         setDeleteItem(row);
         setOpenDialog(true);
@@ -126,30 +153,47 @@ function MenuForm(){
                     <Typography variant="h6" component="h2" sx={{ flexGrow: 1, paddingLeft: 1 }}>
                         Menu Items
                     </Typography>
-                    <Container sx={{padding:2}} >
-                        <DatePicker 
-                            label="Start Date"
-                            value={dayjs(menu.start_date)}
-                            disabled
-                        />
-                        <DatePicker 
-                            label="End Date"
-                            value={dayjs(menu.end_date)}
-                            sx={{marginLeft: 2}}
-                            disabled
-                        />
-                        <Button 
-                            startIcon={<AddIcon />} 
-                            sx={{ 
-                                display: { xs: 'none', md: 'flex' },
-                                marginTop: 2,
-                                float: 'right',
-                            }}
-                            onClick={handleAddItemButtonClick}
-                        >
-                            Add Item
-                        </Button>
-                    </Container>
+                    <Grid container spacing={2}>
+                        <Grid item xs={8}>
+                            <DatePicker 
+                                label="Start Date"
+                                value={dayjs(menu.start_date)}
+                                disabled
+                            />
+                            <DatePicker 
+                                label="End Date"
+                                value={dayjs(menu.end_date)}
+                                sx={{marginLeft: 2}}
+                                disabled
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button 
+                                variant="outlined"
+                                startIcon={<AddIcon />} 
+                                sx={{ 
+                                    display: { xs: 'none', md: 'flex' },
+                                    marginTop: 2,
+                                    marginLeft: 2,
+                                    float: 'right',
+                                }}
+                                onClick={handleAddItemButtonClick}
+                            >
+                                Add Item
+                            </Button>
+                            <Button 
+                                    startIcon={<FileDownloadIcon />} 
+                                    sx={{ 
+                                        display: (menu.items?.length > 0) ? { xs: 'none', md: 'flex' } : "none",
+                                        marginTop: 2,
+                                        float: 'right',
+                                    }}
+                                    onClick={handleDownloadButtonClick}
+                                >
+                                    Download
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
