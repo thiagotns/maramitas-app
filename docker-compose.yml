@@ -6,7 +6,7 @@ services:
     image: mysql:8.3
     restart: always
     volumes:
-      - mysql_data:/var/lib/mysql
+      - /var/docker-volumes/maramitas-app/mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -52,6 +52,3 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - backend
-
-volumes:
-  mysql_data:
