@@ -19,4 +19,5 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
-CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:8000", "backend.wsgi:application"]
+# run entrypoint.sh
+ENTRYPOINT /app/entrypoint.sh

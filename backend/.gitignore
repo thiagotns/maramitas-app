@@ -30,3 +30,5 @@ secret_key.txt
 api/menu-files/*
 # Except this .gitkeep
 !api/menu-files/.gitkeep
+
+staticfiles/*
