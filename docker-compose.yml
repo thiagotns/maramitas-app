@@ -23,6 +23,7 @@ services:
     restart: always
     volumes:
       - ./backend:/app
+      - staticfiles:/app/staticfiles
     ports:
       - "8000:8000"
     depends_on:
@@ -42,10 +43,17 @@ services:
       - backend
 
   nginx:
-    image: pagespeed/nginx-pagespeed:latest
+    container_name: maramitas_nginx
+    image: nginx:latest
+    restart: unless-stopped
     ports:
-      - 80:80
+      - "80:80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/index.html:/var/www/html/index.html
+      - staticfiles:/var/www/html/staticfiles
     depends_on:
       - backend
+
+volumes:
+  staticfiles:
