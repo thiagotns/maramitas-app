@@ -34,13 +34,9 @@ services:
     build: 
       context: ./client
       dockerfile: Dockerfile
-    restart: always
     volumes:
       - ./client:/app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+      - frontend-build:/app/build
 
   nginx:
     container_name: maramitas_nginx
@@ -50,10 +46,12 @@ services:
       - "80:80"
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./nginx/index.html:/var/www/html/index.html
       - staticfiles:/var/www/html/staticfiles
+      - frontend-build:/var/www/html
     depends_on:
+      - client
       - backend
 
 volumes:
   staticfiles:
+  frontend-build:
