@@ -30,7 +30,7 @@ services:
       - db
 
   client:
-    container_name: maramitas_client_build
+    container_name: maramitas_client
     build: 
       context: ./client
       dockerfile: Dockerfile
@@ -43,7 +43,7 @@ services:
     image: nginx:latest
     restart: unless-stopped
     ports:
-      - "81:80"
+      - "80:80"
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - staticfiles:/var/www/html/staticfiles
@@ -53,4 +53,5 @@ services:
       - backend
 
 volumes:
-  mysql_data:
+  staticfiles:
+  frontend-build:
