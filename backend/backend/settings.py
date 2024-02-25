@@ -32,7 +32,9 @@ SECRET_KEY = 'django-insecure-7p&__w(_b078k1!$t!3!^9_ta-t430br57_@9lts!^eq(2-nd2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maramitas.site']
+ALLOWED_HOSTS = [
+    'https://maramitas.site'
+]
 
 
 # Application definition
