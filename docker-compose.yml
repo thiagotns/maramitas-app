@@ -29,14 +29,14 @@ services:
     depends_on:
       - db
 
-  client:
-    container_name: maramitas_client
-    build: 
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - ./client:/app
-      - frontend-build:/app/build
+  #client:
+  #  container_name: maramitas_client
+  #  build: 
+  #    context: ./client
+  #    dockerfile: Dockerfile
+  #  volumes:
+  #    - ./client:/app
+  #    - frontend-build:/app/build
 
   nginx:
     container_name: maramitas_nginx
