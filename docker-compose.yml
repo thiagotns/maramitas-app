@@ -32,7 +32,7 @@ services:
       - db
 
   client:
-    container_name: maramitas_client
+    container_name: maramitas_client_build
     build: 
       context: ./client
       dockerfile: Dockerfile
@@ -47,7 +47,7 @@ services:
   nginx:
     image: pagespeed/nginx-pagespeed:latest
     ports:
-      - 80:80
+      - 81:80
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
