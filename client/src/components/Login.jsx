@@ -7,14 +7,24 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 import useAppAuth from "../hooks/useAppAuth";
 import {axiosPublic} from "../api/axios";
 
+import { useTranslation } from 'react-i18next';
+
 function Login() {
 
+    const { t } = useTranslation();
+
     const [, setAppAuth] = useAppAuth();
-    
+
+    const [openLoading, setOpenLoading] = React.useState(false);
+
+    const [errorMessage, setErrorMessage] = React.useState("");
     const [usernameError, setUsernameError] = React.useState(false);
     const [passwordError, setPasswordError] = React.useState(false);
 
@@ -45,6 +55,8 @@ function Login() {
             return;
         }
 
+        setOpenLoading(true);
+
         axiosPublic.post('/api/token/', {
             username: data.get('username'),
             password: data.get('password')
@@ -60,7 +72,19 @@ function Login() {
             navigate(from , { replace: true });
 
         }).catch((error) => {
-            console.log(error);
+            
+            if(error.response?.status === 401){
+                setErrorMessage(t('login.msgErroAuth'));
+                setUsernameError(true);
+                setPasswordError(true);
+            } else {
+                setErrorMessage(t('login.msgErroApi'));
+            }
+
+            console.log("error", error);
+
+        }).finally(() => {
+            setOpenLoading(false);
         });
         
     };
@@ -77,14 +101,17 @@ function Login() {
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Typography component="h1" variant="h5">
+                        {t('login.header')}
+                        <Alert severity="error" sx={{ display: errorMessage === "" ? 'none' : 'flex-inline' }}>
+                                {errorMessage}
+                        </Alert>
+                    </Typography>
                     <TextField
                         required
                         fullWidth
-                        label="Username"
+                        label={t('login.username')}
                         name="username"
                         autoComplete="username"
                         autoFocus
@@ -95,7 +122,7 @@ function Login() {
                     <TextField
                         required
                         fullWidth
-                        label="Password"
+                        label={t('login.password')}
                         name="password"
                         type="password"
                         sx={{ mt: 2 }}
@@ -109,8 +136,15 @@ function Login() {
                         variant="contained"
                         sx={{ mt: 2, mb: 2 }}
                     >
-                        Sign In
+                        {t('login.button')}
                     </Button>
+
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={openLoading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </Box>
             </Box>
         </Container>

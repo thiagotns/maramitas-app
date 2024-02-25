@@ -6,6 +6,14 @@
         "Customers": "Clientes",
         "Reports": "Relatórios",
         "Logout": "Sair",
+        "login": {
+            "header": "",
+            "msgErroAuth": "Usuário ou senha inválidos",
+            "msgErroApi": "Erro interno do sistema.",
+            "username": "Usuário",
+            "password": "Senha",
+            "button": "Entrar"
+        },
         "menu":{
             "startDate": "Data Inicial",
             "endDate": "Data Final",
