@@ -1,0 +1,10 @@
+{
+    "translation": {
+        "hello": "Olá tradução",
+        "Menu": "Cardápio",
+        "Orders": "Pedidos",
+        "Customers": "Clientes",
+        "Reports": "Relatórios",
+        "Logout": "Sair"
+    }
+}

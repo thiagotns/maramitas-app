@@ -1,5 +1,7 @@
 import './App.css';
 
+import './i18n/index.js'
+
 import { Routes, Route } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'

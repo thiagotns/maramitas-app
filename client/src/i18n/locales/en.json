@@ -1,0 +1,10 @@
+{
+    "translation": {
+        "hello": "Hello",
+        "Menu": "Menu",
+        "Orders": "Orders",
+        "Customers": "Customers",
+        "Reports": "Reports",
+        "Logout": "Logout"
+    }
+}

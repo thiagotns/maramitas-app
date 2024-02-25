@@ -15,10 +15,24 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import useAppauth from '../../hooks/useAppAuth';
 
-const pages = ['Menu', 'Orders', 'Customers', 'Reports'];
-const settings = ['Logout'];
+import { useTranslation } from 'react-i18next';
 
 function MaraAppBar() {
+
+  const { t } = useTranslation();
+
+  const pages = [
+    {name: 'Menu', description: t('Menu')},
+    {name: 'Orders', description: t('Orders')}, 
+    {name: 'Customers', description: t('Customers')},
+    {name: 'Reports', description: t('Reports')},
+  ];
+
+  const settings = [
+    {name: 'Logout', description: t('Logout')}
+  ];
+
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [selected, setSelected] = useState(pages[0]);
@@ -119,12 +133,12 @@ function MaraAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem 
-                  key={page} 
+                  key={page.name} 
                   onClick={() => onClickMenuItem(page)}
                   component={ReactRouterLink}
-                  to={`/${page.toLowerCase()}`}
+                  to={`/${page.name.toLowerCase()}`}
                 >
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{page.description}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -151,8 +165,8 @@ function MaraAppBar() {
           <Box sx={{ flexGrow: 1, display: (appAuth && appAuth.token) ? { xs: 'none', md: 'flex' } : "none" }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={() => onClickMenuItem(page)}
+                key={page.name}
+                onClick={() => onClickMenuItem(page.name)}
                 sx={{ 
                   my: 2, 
                   color: 'white', 
@@ -162,9 +176,9 @@ function MaraAppBar() {
                   textDecorationThickness: 1.5,
                 }}
                 component={ReactRouterLink}
-                to={`/${page.toLowerCase()}`}
+                to={`/${page.name.toLowerCase()}`}
               >
-                {page}
+                {page.description}
               </Button>
             ))}
           </Box>
@@ -192,8 +206,8 @@ function MaraAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => {onClickSettingsItem(setting)}}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.name} onClick={() => {onClickSettingsItem(setting.name)}}>
+                  <Typography textAlign="center">{setting.description}</Typography>
                 </MenuItem>
               ))}
             </Menu>
