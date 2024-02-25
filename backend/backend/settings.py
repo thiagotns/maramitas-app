@@ -146,6 +146,11 @@ CORS_ORIGIN_WHITELIST = [
      'https://maramitas.site'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://maramitas.site'
+]
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
