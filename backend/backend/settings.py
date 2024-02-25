@@ -33,6 +33,7 @@ SECRET_KEY = 'django-insecure-7p&__w(_b078k1!$t!3!^9_ta-t430br57_@9lts!^eq(2-nd2
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'maramitas.site',
     'https://maramitas.site'
 ]
 
@@ -141,7 +142,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+     'https://maramitas.site'
 ]
 
 REST_FRAMEWORK = {
