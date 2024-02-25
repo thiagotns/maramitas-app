@@ -49,7 +49,6 @@ services:
       - staticfiles:/var/www/html/staticfiles
       - frontend-build:/var/www/html
     depends_on:
-      - client
       - backend
 
 volumes:
