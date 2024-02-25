@@ -4,6 +4,8 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
+import { useTranslation } from 'react-i18next';
+
 const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -22,6 +24,8 @@ const MenuTypeEnum = {
 }
 
 function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliableOptions}){
+
+    const { t } = useTranslation();
 
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -155,11 +159,11 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliab
         >
             <Box sx={modalStyle}>
                 <Typography id="modal-modal-title" variant="h6" component="h2" sx={{marginBottom: 2}}>
-                    New Menu Item
+                    { editItem.id ? t('menu.items.headerEditItem') : t('menu.items.headerAddItem')}
                 </Typography>
                 <Stack spacing={2}>
                     <TextField 
-                        label="Name" 
+                        label={t('menu.items.name')}
                         variant="outlined" 
                         error={nameError}
                         value={name}
@@ -170,7 +174,7 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliab
                         required
                     />
                     <TextField 
-                        label="Description" 
+                        label={t('menu.items.description')}
                         variant="outlined" 
                         value={description}
                         error={descriptionError}
@@ -210,8 +214,12 @@ function ModalForm({menu, setMenu, editItem, setEditItem, open, setOpen, avaliab
                     </Typography>
 
                     <Box sx={{display: "flex", justifyContent: "flex-end"}}>
-                        <Button color="primary" onClick={handleCloseModal} sx={{marginRight: 1}}>Cancel</Button>
-                        <Button variant="contained" color="primary" onClick={handleSaveButtonClick}>Save</Button>
+                        <Button color="primary" onClick={handleCloseModal} sx={{marginRight: 1}}>
+                            {t('commom.buttonCancelLabel')}
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={handleSaveButtonClick}>
+                            {t('commom.buttonSaveLabel')}    
+                        </Button>
                     </Box>
                 </Stack>
             </Box>

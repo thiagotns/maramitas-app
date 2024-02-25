@@ -19,7 +19,11 @@ import dayjs from 'dayjs';
 import MenuModal from './MenuModal';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
+import { useTranslation } from 'react-i18next';
+
 function MenuForm(){
+
+    const { t } = useTranslation();
 
     const { id } = useParams();
     const location = useLocation();
@@ -35,9 +39,9 @@ function MenuForm(){
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1 },
-        { field: 'name', headerName: 'Name', flex: 10 },
-        { field: 'type', headerName: 'Type', flex: 4 },
-        { field: 'options_name', headerName: 'Options', flex: 4 },
+        { field: 'name', headerName: t('menu.items.name'), flex: 10 },
+        { field: 'type', headerName: t('menu.items.type'), flex: 4 },
+        { field: 'options_name', headerName: t('menu.items.options'), flex: 4 },
         {
             field: 'actions',
             type: 'actions',
@@ -151,17 +155,17 @@ function MenuForm(){
                 </Box>
                 <Paper sx={{padding: 2, marginTop: 1}}>
                     <Typography variant="h6" component="h2" sx={{ flexGrow: 1, paddingLeft: 1 }}>
-                        Menu Items
+                        {t('menu.items.header')}
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={8}>
                             <DatePicker 
-                                label="Start Date"
+                                label={t("menu.startDate")}
                                 value={dayjs(menu.start_date)}
                                 disabled
                             />
                             <DatePicker 
-                                label="End Date"
+                                label={t("menu.endDate")}
                                 value={dayjs(menu.end_date)}
                                 sx={{marginLeft: 2}}
                                 disabled
@@ -179,7 +183,7 @@ function MenuForm(){
                                 }}
                                 onClick={handleAddItemButtonClick}
                             >
-                                Add Item
+                                {t('menu.items.buttonAddItem')}
                             </Button>
                             <Button 
                                     startIcon={<FileDownloadIcon />} 
@@ -231,10 +235,10 @@ function MenuForm(){
             open={openDialog}
             onClose={handleCloseDialog}
         >
-            <DialogTitle>Delete Item</DialogTitle>
+            <DialogTitle>{t('menu.items.deleteDialogHeader')}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Do you want delete "{deleteItem.name}"?
+                    {t('menu.items.deleteDialogMessage')} "{deleteItem.name}"?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

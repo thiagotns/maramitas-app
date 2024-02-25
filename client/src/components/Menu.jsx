@@ -6,13 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import axios from "axios";
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'start_date', headerName: 'Start Date', width: 130 },
-    { field: 'end_date', headerName: 'End Date', width: 130 }
-  ];
+import { useTranslation } from 'react-i18next';
 
 const modalStyle = {
     position: 'absolute',
@@ -27,6 +22,15 @@ const modalStyle = {
   };
 
 function Menu() {
+
+    const { t } = useTranslation();
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'start_date', headerName: t('menu.startDate'), width: 130 },
+        { field: 'end_date', headerName: t('menu.endDate'), width: 130 }
+      ];
+    
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -96,7 +100,7 @@ function Menu() {
                 sx={{ display: { xs: 'none', md: 'flex' } }}
                 onClick={handleCreateButtonClick}
             >
-                Create
+                {t('menu.createButtonLabel')}
             </Button>
         </Box>
         <Modal
@@ -107,25 +111,29 @@ function Menu() {
         >
             <Box sx={modalStyle}>
                 <Typography id="modal-modal-title" variant="h6" component="h2" sx={{marginBottom: 2}}>
-                    Create Menu
+                    {t('menu.createMenuHeader')}
                 </Typography>
                 <Stack spacing={2}>
-                    <DatePicker label="Start Date"
+                    <DatePicker label={t('menu.startDate')}
                      value={startDate}
                      onChange={(event) => {
                         console.log("event", event);
                         setStartDate(event)
                     }}
                      />
-                    <DatePicker label="End Date" 
+                    <DatePicker label={t('menu.endDate')}
                     value={endDate}
                     onChange={(event) => {
                         console.log("event", event);
                         setEndDate(event)
                     }}/>
                     <Box sx={{display: "flex", justifyContent: "flex-end"}}>
-                        <Button color="primary" onClick={handleClose} sx={{marginRight: 1}}>Cancel</Button>
-                        <Button variant="contained" color="primary" onClick={handleSaveButtonClick}>Save</Button>
+                        <Button color="primary" onClick={handleClose} sx={{marginRight: 1}}>
+                            {t('commom.buttonCancelLabel')}
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={handleSaveButtonClick}>
+                            {t('commom.buttonSaveLabel')}
+                        </Button>
                     </Box>
                 </Stack>
             </Box>

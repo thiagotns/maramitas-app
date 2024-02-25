@@ -5,6 +5,29 @@
         "Orders": "Pedidos",
         "Customers": "Clientes",
         "Reports": "Relatórios",
-        "Logout": "Sair"
+        "Logout": "Sair",
+        "menu":{
+            "startDate": "Data Inicial",
+            "endDate": "Data Final",
+            "createButtonLabel": "Novo",
+            "createMenuHeader": "Novo Cardápio",
+            "items": {
+                "header": "Itens do Cardápio",
+                "buttonAddItem": "Adicionar Item",
+                "name": "Nome",
+                "description": "Descrição",
+                "price": "Preço",
+                "type": "Tipo",
+                "options": "Opções",
+                "headerAddItem": "Adicionar Item ao Cardápio",
+                "headerEditItem": "Editar Item do Cardápio",
+                "deleteDialogHeader": "Excluir Item do Cardápio",
+                "deleteDialogMessage": "Tem certeza que deseja excluir"
+            }
+        },
+        "commom":{
+            "buttonCancelLabel": "Cancelar",
+            "buttonSaveLabel": "Salvar"
+        }
     }
 }
