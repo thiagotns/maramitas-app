@@ -43,7 +43,7 @@ services:
     image: nginx:latest
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - staticfiles:/var/www/html/staticfiles
