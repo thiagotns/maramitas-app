@@ -34,7 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'maramitas.site',
-    'https://maramitas.site'
+    'https://maramitas.site',
+    'localhost'
 ]
 
 
