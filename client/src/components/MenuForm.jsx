@@ -158,7 +158,7 @@ function MenuForm(){
                         {t('menu.items.header')}
                     </Typography>
                     <Grid container spacing={2}>
-                        <Grid item xs={8}>
+                        <Grid item xs={8} sx={{ display: { xs: 'none', md: 'flex' }}}>
                             <DatePicker 
                                 label={t("menu.startDate")}
                                 value={dayjs(menu.start_date)}
@@ -171,7 +171,47 @@ function MenuForm(){
                                 disabled
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Stack spacing={2} sx={{ display: { xs: 'flex', md: 'none' }, marginTop: 3, padding: 2, width: "100%"}}>
+                            <DatePicker 
+                                sx={{width: '100%'}}
+                                label={t("menu.startDate")}
+                                value={dayjs(menu.start_date)}
+                                disabled
+                            />
+                            <DatePicker 
+                                label={t("menu.endDate")}
+                                value={dayjs(menu.end_date)}
+                                sx={{marginLeft: 2}}
+                                disabled
+                            />
+                            <Stack orientation="horizontal" spacing={2} sx={{width: '100%'}}>
+                                <Button 
+                                    variant="outlined"
+                                    startIcon={<AddIcon />} 
+                                    sx={{ 
+                                        display: { xs: 'flex', md: 'none' },
+                                        marginTop: 2,
+                                        marginLeft: 2,
+                                        float: 'right',
+                                    }}
+                                    onClick={handleAddItemButtonClick}
+                                >
+                                    {t('menu.items.buttonAddItem')}
+                                </Button>
+                                <Button 
+                                        startIcon={<FileDownloadIcon />} 
+                                        sx={{ 
+                                            display: (menu.items?.length > 0) ? { md: 'flex' } : "none",
+                                            marginTop: 2,
+                                            float: 'right',
+                                        }}
+                                        onClick={handleDownloadButtonClick}
+                                    >
+                                        Download
+                                </Button>
+                            </Stack>
+                        </Stack>
+                        <Grid item xs={4}  sx={{display: { xs: 'none', md: 'flex' }}}>
                             <Button 
                                 variant="outlined"
                                 startIcon={<AddIcon />} 
@@ -188,7 +228,7 @@ function MenuForm(){
                             <Button 
                                     startIcon={<FileDownloadIcon />} 
                                     sx={{ 
-                                        display: (menu.items?.length > 0) ? { xs: 'none', md: 'flex' } : "none",
+                                        display: (menu.items?.length > 0) ? { md: 'flex' } : "none",
                                         marginTop: 2,
                                         float: 'right',
                                     }}
