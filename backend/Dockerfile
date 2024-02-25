@@ -1,8 +1,8 @@
 FROM python:3.10
 
 RUN apt-get update \
-    && apt-get install -y gcc default-libmysqlclient-dev pkg-config 
-    && apt-get install -Y wkhtmltopdf
+    && apt-get install -y gcc default-libmysqlclient-dev pkg-config \ 
+    && apt-get install -y wkhtmltopdf
 
 # set work directory
 WORKDIR /app
@@ -18,3 +18,6 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . /app
+
+# run entrypoint.sh
+ENTRYPOINT /app/entrypoint.sh
