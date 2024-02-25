@@ -10,7 +10,8 @@ const i18nConfig = {
         'pt-BR': {...ptJson},
         'en': {...enJson},
         'en-US': {...enJson},
-    }
+    },
+    lng: 'pt',
   }
 
 i18n.use(LanguageDetector).use(initReactI18next).init(i18nConfig)
