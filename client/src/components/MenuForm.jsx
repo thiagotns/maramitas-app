@@ -10,6 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,7 +28,6 @@ function MenuForm(){
     const { t } = useTranslation();
 
     const { id } = useParams();
-    const location = useLocation();
     const [menu, setMenu] = React.useState({});
     const [editItem, setEditItem] = React.useState({});
     const [deleteItem, setDeleteItem] = React.useState({}); 
@@ -34,6 +35,7 @@ function MenuForm(){
     const [openModal, setOpenModal] = React.useState(false);
     const [openAlert, setOpenAlert] = React.useState(false/*location.state && location.state.message*/);
     const [openDialog, setOpenDialog] = React.useState(false);
+    const [openLoading, setOpenLoading] = React.useState(false);
 
     const axiosPrivate = useAxiosPrivate();
 
@@ -81,7 +83,8 @@ function MenuForm(){
     }
 
     const handleDownloadButtonClick = () => {
-        console.log("length", menu.items?.length > 0 );
+        
+        setOpenLoading(true);
         
         axiosPrivate.get(`/public/menu/?id=${id}`, {
             responseType: 'blob'
@@ -102,6 +105,8 @@ function MenuForm(){
 
         }).catch(error => {
             console.error('There was an error!', error);
+        }).finally(() => {
+            setOpenLoading(false);
         });
 
     }
@@ -291,6 +296,12 @@ function MenuForm(){
                 </Button>
             </DialogActions>
         </Dialog>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openLoading}
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
         </>
     );
 }
