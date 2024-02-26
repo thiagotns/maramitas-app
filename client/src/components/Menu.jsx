@@ -27,8 +27,14 @@ function Menu() {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'start_date', headerName: t('menu.startDate'), width: 130 },
-        { field: 'end_date', headerName: t('menu.endDate'), width: 130 }
+        { field: 'start_date', headerName: t('menu.startDate'), width: 130, 
+            valueFormatter: params => 
+                dayjs(params?.value).format('DD/MM/YYYY')
+        },
+        { field: 'end_date', headerName: t('menu.endDate'), width: 130, 
+            valueFormatter: params => 
+              dayjs(params?.value).format('DD/MM/YYYY')
+        }
       ];
     
 
