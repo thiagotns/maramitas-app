@@ -54,3 +54,30 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Order(models.Model):
+
+    class Status(models.TextChoices):
+        PENDING = 'Pending'
+        CONFIRMED = 'Confirmed'
+        FULLFILLED = 'Fullfilled'
+        SHIPPED = 'Shipped'
+        FINISHED = 'Finished'
+        CANCELLED = 'Cancelled'
+
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='orders')
+    menu = models.ForeignKey(Menu, on_delete=models.PROTECT, related_name='orders')
+
+    payment_method = models.CharField(max_length=20)
+    shipping_method = models.CharField(max_length=20)
+
+    shipping_date = models.DateField()
+    shipping_time_range = models.CharField(max_length=20)
+    
+    discount = models.DecimalField(max_digits=6, decimal_places=2)
+    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+
+    def __str__(self):
+        return "Order from " + self.customer.name + " at " + str(self.shipping_date) + " " + self.shipping_time_range
