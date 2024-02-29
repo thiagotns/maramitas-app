@@ -24,6 +24,8 @@ from api.views import OptionViewSet
 from api.views import TokenObtainPairView
 from api.views import AreaViewSet
 from api.views import CustomerViewSet
+from api.views import PaymentMethodViewSet
+from api.views import OrderViewSet
 from api.views import publicMenuView
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -33,6 +35,8 @@ router.register(r'menu-item', MenuItemViewSet)
 router.register(r'option', OptionViewSet)
 router.register(r'area', AreaViewSet)
 router.register(r'customer', CustomerViewSet)
+router.register(r'payment-method', PaymentMethodViewSet)
+router.register(r'order', OrderViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

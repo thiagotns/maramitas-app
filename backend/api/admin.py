@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Menu, Option, MenuItem, Area, Customer
+from .models import Menu, Option, MenuItem, Area, Customer, PaymentMethod, Order
 
 # Register your models here.
 class MenuAdmin(admin.ModelAdmin):
@@ -17,8 +17,16 @@ class AreaAdmin(admin.ModelAdmin):
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone', 'address', 'area')
 
+class PaymentMethodAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'payment_method', 'total', 'status')
+
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Option, OptionAdmin)
 admin.site.register(MenuItem, MenuItemAdmin)
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(PaymentMethod, PaymentMethodAdmin)
+admin.site.register(Order, OrderAdmin)

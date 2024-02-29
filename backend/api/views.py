@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .models import Menu, Option, MenuItem, Area, Customer
-from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, AreaSerializer, CustomerSerializer, CustomerReadSerializer
+from .models import Menu, Option, MenuItem, Area, Customer, PaymentMethod, Order
+from .serializers import MenuSerializer, OptionSerializer, MenuItemSerializer, MenuItemReadSerializer, TokenObtainPairSerializer, AreaSerializer, CustomerSerializer, CustomerReadSerializer, PaymentMethodSerializer, OrderSerializer
 from django.http import HttpResponse
 from backend.settings import BASE_DIR
 import imgkit
@@ -106,3 +106,13 @@ def publicMenuView(request):
         response = HttpResponse(img, content_type="image/jpg")
         response['Content-Disposition'] = 'inline; filename="cardapio-mara.jpg"'
         return response
+    
+class PaymentMethodViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    queryset = PaymentMethod.objects.all()
+    serializer_class = PaymentMethodSerializer
+
+class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

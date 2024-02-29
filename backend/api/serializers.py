@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Menu, Option, MenuItem, Area, Customer
+from .models import Menu, Option, MenuItem, Area, Customer, PaymentMethod, Order
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class OptionSerializer(serializers.ModelSerializer):
@@ -56,3 +56,13 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
             data["username"] = user.username
     
             return data
+    
+class PaymentMethodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentMethod
+        fields = ('id', 'name')
+
+class OrderSerializer(serializers.Serializer):
+    class Meta:
+        model = Order
+        fields = ('id', 'menu', 'customer', 'payment_method', 'total', 'status', 'created_at', 'updated_at')
