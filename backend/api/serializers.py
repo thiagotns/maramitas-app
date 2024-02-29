@@ -28,6 +28,11 @@ class MenuSerializer(serializers.ModelSerializer):
         model = Menu
         fields = ('id', 'start_date', 'end_date', 'items', 'avaliable_options')
 
+class MenuSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = ('id', 'start_date', 'end_date')
+
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
@@ -62,7 +67,12 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
         model = PaymentMethod
         fields = ('id', 'name')
 
-class OrderSerializer(serializers.Serializer):
+class OrderSerializer(serializers.ModelSerializer):
+
+    menu = MenuSummarySerializer(read_only=True)
+    customer = CustomerSerializer(read_only=True)
+    payment_method = PaymentMethodSerializer(read_only=True)
+
     class Meta:
         model = Order
         fields = ('id', 'menu', 'customer', 'payment_method', 'total', 'status', 'created_at', 'updated_at')
