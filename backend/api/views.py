@@ -17,6 +17,13 @@ class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
+    @action(detail=True, methods=['get'])
+    def orders(self, request, pk=None):
+        menu = self.get_object()
+        orders = Order.objects.filter(menu=menu)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
 class OptionViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
     queryset = Option.objects.all()
@@ -116,3 +123,4 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    
