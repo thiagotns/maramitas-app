@@ -55,6 +55,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
     
+class PaymentMethod(models.Model):
+    
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Order(models.Model):
 
     class Status(models.TextChoices):
@@ -65,18 +72,33 @@ class Order(models.Model):
         FINISHED = 'Finished'
         CANCELLED = 'Cancelled'
 
+    class ShippingMethod(models.TextChoices):
+        PICKUP = 'Pickup'
+        DELIVERY = 'Delivery'
+
+    class ShippingTimeRange(models.TextChoices):
+        MORNING = 'Morning (9:00-12:00)'
+        AFTERNOON = 'Afternoon (14:00-17:00)'
+
+    class PaymentStatus(models.TextChoices):
+        PENDING = 'Pending'
+        PAID = 'Paid'
+        REFUNDED = 'Refunded'
+
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='orders')
     menu = models.ForeignKey(Menu, on_delete=models.PROTECT, related_name='orders')
 
-    payment_method = models.CharField(max_length=20)
-    shipping_method = models.CharField(max_length=20)
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT)
+    
+    shipping_method = models.CharField(max_length=20, choices=ShippingMethod.choices)
 
     shipping_date = models.DateField()
-    shipping_time_range = models.CharField(max_length=20)
+    shipping_time_range = models.CharField(max_length=30, choices=ShippingTimeRange.choices)
     
     discount = models.DecimalField(max_digits=6, decimal_places=2)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     
+    payment_status = models.CharField(max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
 
     def __str__(self):
