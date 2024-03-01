@@ -14,7 +14,7 @@ import os
 
 class MenuViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.all().order_by('-id')
     serializer_class = MenuSerializer
 
     @action(detail=True, methods=['get'])
