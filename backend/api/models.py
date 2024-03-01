@@ -95,8 +95,8 @@ class Order(models.Model):
     shipping_date = models.DateField()
     shipping_time_range = models.CharField(max_length=30, choices=ShippingTimeRange.choices)
     
-    discount = models.DecimalField(max_digits=6, decimal_places=2)
-    total = models.DecimalField(max_digits=6, decimal_places=2)
+    discount = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    total = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     
     payment_status = models.CharField(max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
