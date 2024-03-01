@@ -36,6 +36,30 @@
         "commom":{
             "buttonCancelLabel": "Cancelar",
             "buttonSaveLabel": "Salvar"
+        },
+        "order": {
+            "menuHeader": "Pedidos do Cardápio",
+            "toMenu": "à",
+            "createdAt": "Data do Pedido",
+            "paymentStatus": "Pagamento",
+            "shippingMethod": "Entrega",
+            "status": "Status",
+            "total": "Total",
+            "customer": {
+                "name": "Nome"
+            },
+            "Pickup": "Retirada",
+            "Delivery": "Delivery",
+            "statusValue": {
+                "Pending": "Pendente",
+                "Confirmed": "Confirmado",
+                "Fullfilled": "Produto Pronto",
+                "Shipped": "Saiu para Entrega",
+                "Finished": "Finalizado",
+                "Cancelled": "Cancelado",
+                "Paid": "Pago",
+                "Refunded": "Reembolsado"
+            }
         }
     }
 }
