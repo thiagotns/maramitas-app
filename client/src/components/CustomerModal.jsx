@@ -15,7 +15,7 @@ const modalStyle = {
     p: 4,
   };
 
-function CustomerModal({customerList, setCustomerList, editCustomer, setEditCustomer, areaList, open, setOpen}){
+function CustomerModal({customerList, setCustomerList, editCustomer, setEditCustomer, areaList, open, setOpen, newOrder = false, setSelectedCustomerValue}){
 
     const [name, setName] = React.useState("");
     const [phone, setPhone] = React.useState("");
@@ -81,7 +81,7 @@ function CustomerModal({customerList, setCustomerList, editCustomer, setEditCust
         let method = 'POST';
         let editSufix = '';
 
-        if(editCustomer.id){
+        if(editCustomer?.id){
             customer.id = editCustomer.id;
             method = 'PUT';
             editSufix = `${editCustomer.id}/`;
@@ -102,12 +102,17 @@ function CustomerModal({customerList, setCustomerList, editCustomer, setEditCust
             let areaUpdated = areaList.find(area => area.id === response.data.area);
             response.data.area = areaUpdated;
 
-            console.log("areaUpdated", areaUpdated);
-
-            if(editCustomer.id){
+            if(editCustomer?.id){
                 setCustomerList(customerList.map(item => item.id === response.data.id ? response.data : item));
             } else {
-                setCustomerList([...customerList, response.data]);
+                if(newOrder){
+                    console.log("new order");
+                    console.log("customerList", customerList);
+                    setCustomerList([...customerList, {id: response.data.id, label: response.data.name}]);
+                    setSelectedCustomerValue(response.data.name);
+                } else {
+                    setCustomerList([...customerList, response.data]);
+                }
             }
 
             handleCloseModal();

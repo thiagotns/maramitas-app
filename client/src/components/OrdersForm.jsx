@@ -20,6 +20,7 @@ function OrdersForm() {
     const menuRef = useRef(null);
 
     const [customersList, setCustomersList] = useState([]);
+    const [selectedCustomerValue, setSelectedCustomerValue] = useState(null);
     const [customerAreaList, setCustomerAreaList] = useState([]);
     const [openCustomerModal, setOpenCustomerModal] = useState(false);
 
@@ -50,7 +51,7 @@ function OrdersForm() {
                 console.error('There was an error!', error);
             });
     
-    }, [axiosPrivate]);
+    }, []);
 
     const handleNewCustomerButtonClick = () => {
         setOpenCustomerModal(true);
@@ -63,8 +64,10 @@ function OrdersForm() {
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Autocomplete
                         sx={{ width: "100%" }}
+                        value={selectedCustomerValue}
                         options={customersList}
                         renderInput={(params) => <TextField {...params} label={t("order.customer.customer")} />}
+                        onChange={(event, selectedValue) => {setSelectedCustomerValue(selectedValue)}} 
                     />
                     <Button variant="contained" color="primary" sx={{marginLeft: 2, height: "100%"}}
                         onClick={handleNewCustomerButtonClick}
@@ -75,13 +78,15 @@ function OrdersForm() {
             </Grid>
         </Grid>
         <CustomerModal
-            customerList={null}
-            setCustomerList={null}
+            customerList={customersList}
+            setCustomerList={setCustomersList}
             editCustomer={null}
             setEditCustomer={null}
             areaList={customerAreaList}
             open={openCustomerModal}
             setOpen={setOpenCustomerModal}
+            newOrder={true}
+            setSelectedCustomerValue={setSelectedCustomerValue}
         />
         </>
     );
