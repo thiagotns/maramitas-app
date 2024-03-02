@@ -45,7 +45,9 @@
             "shippingMethod": "Entrega",
             "status": "Status",
             "total": "Total",
+            "new": "Novo Pedido",
             "customer": {
+                "customer": "Cliente",
                 "name": "Nome"
             },
             "Pickup": "Retirada",

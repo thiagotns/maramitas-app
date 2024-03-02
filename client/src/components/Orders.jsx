@@ -4,8 +4,10 @@ import { IconButton, Grid, Paper, Box, Fab, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import AddIcon from '@mui/icons-material/Add';
 import dayjs from 'dayjs';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from 'react-i18next';
 
@@ -39,6 +41,7 @@ function Orders() {
     ];
 
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
 
     const [menuList, setMenuList] = useState([]);
     const [orderList, setOrderList] = useState([]);
@@ -99,7 +102,18 @@ function Orders() {
         setSelectedMenuPosition((prev) => prev - 1);
     }
 
+    const handleNewOrderButtonClick = () => {
+        console.log("New order button clicked");
+
+        navigate('/orders/new', {
+            state: {
+                menu: selectedMenu
+            }
+        });
+    }
+
     return (
+        <>
         <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
@@ -135,6 +149,14 @@ function Orders() {
                 </Paper>
             </Grid>
         </Grid>
+        <Fab 
+            color="primary" aria-label="add" 
+            sx={{position: 'fixed', bottom: 16, right: 16}}
+            onClick={handleNewOrderButtonClick}
+        >
+            <AddIcon />
+        </Fab>
+        </>
     );
 }
 

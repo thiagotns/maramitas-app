@@ -11,6 +11,7 @@ import Menu from './components/Menu';
 import MenuForm from './components/MenuForm';
 import Home from './components/Home';
 import Orders from './components/Orders';
+import OrdersForm from './components/OrdersForm';
 import Layout from './components/common/Layout';
 import Login from './components/Login';
 import PrivateRoute from './components/common/PrivateRoute';
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/menu/create" element={<MenuForm />} />
                 <Route path="/menu/:id" element={<MenuForm />} />
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/orders/new" element={<OrdersForm />} />
                 <Route path="/customers" element={<Customer />} />
               </Route>
               

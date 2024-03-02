@@ -47,7 +47,8 @@ function CustomerModal({customerList, setCustomerList, editCustomer, setEditCust
         setNameError(false);
         setPhoneError(false);
 
-        setEditCustomer({});
+        if(editCustomer)
+            setEditCustomer({});
     
         setOpen(false);
     };
